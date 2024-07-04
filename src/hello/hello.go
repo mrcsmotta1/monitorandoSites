@@ -23,7 +23,7 @@ func main() {
 		case 1:
 			iniciarMonitoramento()
 		case 2:
-			fmt.Println("Exibindo logs...")
+			imprimeLogs()
 		case 0:
 			fmt.Println("Saindo do programa...")
 			os.Exit(0)
@@ -51,8 +51,8 @@ func leComando() int {
 			continue
 		}
 
-		if comandoInt < 0 || comandoInt > 9 {
-			fmt.Println("O valor digitado está fora do intervalo (0-9).")
+		if comandoInt < 0 || comandoInt > 2 {
+			fmt.Println("O valor digitado está fora do intervalo (0-2).")
 			continue
 		}
 
@@ -135,4 +135,15 @@ func registraLog(site string, status bool) {
 	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + "- online: " + strconv.FormatBool(status) + "\n")
 
 	arquivo.Close()
+}
+
+func imprimeLogs() {
+	fmt.Println("Exibindo logs...")
+	arquivo, err := os.ReadFile("./log.txt")
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro ao abrir arquivo de logs: ", err)
+	}
+
+	fmt.Println(string(arquivo))
 }
